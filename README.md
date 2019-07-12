@@ -1,2 +1,2 @@
 # curso-react-native
-Aplicativos construídos durante o curso de react-native
+Projetos desenvolvidos durante o curso de "React Native: Desenvolva APPs Nativas para Android e iOS" da udemy pela cod3r
