@@ -31,7 +31,7 @@ const MenuRoutes = {
     Month:{
         name: 'Month',
         screen: props => <Agenda title = 'Mês' daysAhead = {30} {...props} />,
-        navigation: {
+        navigationOptions: {
             title: 'Mês'
         }
     }

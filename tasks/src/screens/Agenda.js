@@ -6,7 +6,7 @@ import todayImage from '../../assets/imgs/today.jpg'
 import tomorrowImage from '../../assets/imgs/tomorrow.jpg'
 import weekImage from '../../assets/imgs/week.jpg'
 import monthImage from '../../assets/imgs/month.jpg'
-import comomonStyles from '../commonStyles'
+import commonStyles from '../commonStyles'
 import Tasks from '../components/Tasks'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ActionButton from 'react-native-action-button'
@@ -87,19 +87,19 @@ export default class Agenda extends Component {
         let image = null
         switch(this.props.daysAhead){
             case 0 : 
-                styleColor= comomonStyles.colors.today
+                styleColor= commonStyles.colors.today
                 image = todayImage
                 break
             case 1:
-                styleColor = comomonStyles.colors.tomorrow
+                styleColor = commonStyles.colors.tomorrow
                 image = tomorrowImage
                 break
             case 7:
-                styleColor = comomonStyles.colors.week
+                styleColor = commonStyles.colors.week
                 image = weekImage
                 break
             default:
-                styleColor =comomonStyles.colors.month
+                styleColor = commonStyles.colors.month
                 image = monthImage
                 break
         }
@@ -111,11 +111,11 @@ export default class Agenda extends Component {
                 <ImageBackground source={image} style={styles.background}>
                     <View style={styles.iconBar}>
                         <TouchableOpacity onPress ={() => this.props.navigation.openDrawer()}>
-                            <Icon name='bars' size={20} color={comomonStyles.colors.secondary} />
+                            <Icon name='bars' size={20} color={commonStyles.colors.secondary} />
                         </TouchableOpacity>
                         <TouchableOpacity  onPress={this.toggleFilter}>
                             <Icon name={this.state.showDoneTasks?'eye':'eye-slash'}
-                                size={20} color={comomonStyles.colors.secondary} />
+                                size={20} color={commonStyles.colors.secondary} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.titleBar} >
@@ -148,18 +148,18 @@ const styles = StyleSheet.create({
     },
     titleBar:{
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'flex-end'
     },
     title:{
-        fontFamily: comomonStyles.fontFamily,
-        color: comomonStyles.colors.secondary,
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
         fontSize: 50,
         marginLeft: 20,
         marginBottom: 10,
     },
     subtitle:{
-        fontFamily: comomonStyles.fontFamily,
-        color: comomonStyles.colors.secondary,
+        fontFamily: commonStyles.fontFamily,
+        color: commonStyles.colors.secondary,
         fontSize: 20,
         marginLeft: 20,
         marginBottom: 30
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
         flex: 7
     },
     iconBar:{
-        marginTop: Platform.os === 'ios' ? 30 : 10,
+        marginTop: Platform.OS === 'ios' ? 30 : 10,
         marginHorizontal:20,
         flexDirection: 'row',
         justifyContent: 'space-between'
