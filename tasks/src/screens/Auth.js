@@ -5,7 +5,8 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native'
 
 import commonStyles from '../commonStyles'
@@ -30,7 +31,7 @@ export default class Auth extends Component {
             })
 
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
-
+            AsyncStorage.setItem('userData',JSON.stringify(res.data))
             this.props.navigation.navigate('Home',res.data)
 
         }catch(err){
@@ -84,7 +85,7 @@ export default class Auth extends Component {
                             value={this.state.name}
                             onChangeText={name=> this.setState({name})}/>
                     }
-                    <AuthInput icon='@' placeholder='E-mail' style={styles.input}
+                    <AuthInput icon='at' placeholder='E-mail' style={styles.input}
                         value={this.state.email}
                         onChangeText={email => this.setState({email})} />
                     <AuthInput icon='lock' secureTextEntry={true} placeholder='Senha' style={styles.input}
