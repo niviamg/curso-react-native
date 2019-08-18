@@ -3,6 +3,7 @@ import {createSwitchNavigator,createDrawerNavigator,createAppContainer} from 're
 import Agenda from './screens/Agenda'
 import Auth from './screens/Auth'
 import commonStyles from './commonStyles'
+import Menu from './screens/Menu'
 
 const MenuRoutes = {
     Today:{
@@ -37,6 +38,7 @@ const MenuRoutes = {
 
 const MenuConfig = {
     initialRouteName: 'Today',
+    contentComponent: Menu,
     contentOptions: {
         labelStyle:{
             fontFamily: commonStyles.fontFamily,
