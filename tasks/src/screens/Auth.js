@@ -22,40 +22,55 @@ export default class Auth extends Component {
         password:'',
         confirmPassword:'',
     }
+    signin = async () => {
+        try{
+            const res = await axios.post(`${server}/signin`,{
+                email: this.state.email,
+                password: this.state.password
+            })
 
-    signinOrSignup = async () =>{
+            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+
+            this.props.navigation.navigate('Home')
+
+        }catch(err){
+            Alert.alert('Erro','Falha no login!')
+        }
+    }
+
+    signup = async () => {
+        try{
+            await axios.post(`${server}/signup`,{
+                name: this.state.name,
+                email:this.state.email,
+                password: this.state.password,
+                confirmPassword: this.state.confirmPassword
+            })
+            Alert.alert('Sucesso!','Usuário cadastrado ')
+            this.setState({stageNew: false})
+        }catch(err){
+            showError(err)
+        }
+    }
+
+    signinOrSignup = () =>{
         if(this.state.stageNew){
-            try{
-                await axios.post(`${server}/signup`,{
-                    name: this.state.name,
-                    email:this.state.email,
-                    password: this.state.password,
-                    confirmPassword: this.state.confirmPassword
-                })
-                Alert.alert('Sucesso!','Usuário cadastrado ')
-                this.setState({stageNew: false})
-            }catch(err){
-                showError(err)
-            }
-            
+            this.signup();           
         }else{
-            try{
-                const res = await axios.post(`${server}/signin`,{
-                    email: this.state.email,
-                    password: this.state.password
-                })
-
-                axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
-
-                this.props.navigation.navigate('Home')
-
-            }catch(err){
-                Alert.alert('Erro','Falha no login!')
-            }
+            this.signin();           
         }
     }
 
     render(){
+        const validations = []
+        validations.push(this.state.email && this.state.email.includes('@'))
+        validations.push(this.state.password && this.state.password.length >= 6)
+        if(this.state.stageNew){
+            validations.push(this.state.name && this.state.name.trim())
+            validations.push(this.state.confirmPassword)
+            validations.push(this.state.password === this.state.confirmPassword)
+        }
+        const validForm =validations.reduce((all,v) => all && v)
         return(
             <ImageBackground source={backgroundImage}
                 style = {styles.background}>
@@ -80,8 +95,8 @@ export default class Auth extends Component {
                             style={styles.input} value={this.state.confirmPassword}
                             onChangeText={confirmPassword => this.setState({confirmPassword})}/>
                     }
-                    <TouchableOpacity onPress={this.signinOrSignup}>
-                        <View style={styles.button}>
+                    <TouchableOpacity disabled={!validForm} onPress={this.signinOrSignup}>
+                        <View style={[styles.button, !validForm?{backgroundColor:'#AAA'}:{}]}>
                             <Text style={styles.buttonText}>
                                 {this.state.stageNew?'Registrar': 'Entrar'}
                             </Text>
